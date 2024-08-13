@@ -19,7 +19,6 @@ from imblearn.over_sampling import ADASYN
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.svm import SVC
 from sklearn.ensemble import StackingClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
@@ -27,7 +26,6 @@ from xgboost import XGBClassifier
 import lightgbm as lgb
 
 from sklearn.metrics import f1_score
-from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 
@@ -113,31 +111,9 @@ print(y_train.value_counts())
 #Random Forest
 
 #==============================================
-#train with Unbalanced data
-#==============================================
-# rf = RandomForestClassifier(n_estimators=100)
-# rf.fit(x_train_encoded, y_train)
-
-# # make predictions
-# y_unblncd_predict = rf.predict(x_test_encoded)
-
-# # training set performance
-# rf_unblncd_f1_score = f1_score(y_test, y_unblncd_predict, average='weighted')
-# rf_unblncd_matt_corr = matthews_corrcoef(y_test, y_unblncd_predict)
-# rf_unblncd_precision = precision_score(y_test, y_unblncd_predict, average='weighted',)
-# rf_unblncd_recall = recall_score(y_test, y_unblncd_predict, average='weighted',)
-
-# # result
-# print('Unbalanced Performance Result')
-# print('Acc F1:', rf_unblncd_f1_score)
-# print('Acc Matt_Corr:', rf_unblncd_matt_corr)
-# print('Acc Precision:', rf_unblncd_precision)
-# print('Acc Recall:', rf_unblncd_recall)
-
-#==============================================
 # train with SMOTE Balnced data
 #==============================================
-rf_smote = RandomForestClassifier(n_estimators=300)
+rf_smote = RandomForestClassifier(n_estimators=100)
 rf_smote.fit(X_train_smote, y_train_smote)
 
 # make predictions
@@ -145,7 +121,6 @@ y_smote_predict = rf_smote.predict(x_test_encoded)
 
 # testing set performance
 rf_smote_f1_score = f1_score(y_test, y_smote_predict, average='weighted')
-rf_smote_matt_corr = matthews_corrcoef(y_test, y_smote_predict)
 rf_smote_precision = precision_score(y_test, y_smote_predict, average='weighted',)
 rf_smote_recall = recall_score(y_test, y_smote_predict, average='weighted',)
 
@@ -153,14 +128,13 @@ print('===================================')
 # result
 print('SMOTE Performance Result')
 print('Acc F1:', rf_smote_f1_score)
-print('Acc Matt_Corr:', rf_smote_matt_corr)
 print('Acc Precision:', rf_smote_precision)
 print('Acc Recall:', rf_smote_recall)
 
 #==============================================
 # train with ADASYN Balanced data
 #==============================================
-rf_adasyn = RandomForestClassifier(n_estimators=450)
+rf_adasyn = RandomForestClassifier(n_estimators=100)
 rf_adasyn.fit(X_train_adasyn, y_train_adasyn)
 
 # make predictions
@@ -168,7 +142,6 @@ y_adasyn_predict = rf_adasyn.predict(x_test_encoded)
 
 # testing set performance
 rf_adasyn_f1_score = f1_score(y_test, y_adasyn_predict, average='weighted')
-rf_adasyn_matt_corr = matthews_corrcoef(y_test, y_adasyn_predict)
 rf_adasyn_precision = precision_score(y_test, y_adasyn_predict, average='weighted',)
 rf_adasyn_recall = recall_score(y_test, y_adasyn_predict, average='weighted',)
 
@@ -176,38 +149,16 @@ print('===================================')
 # result
 print('ADASYN Performance Result')
 print('Acc F1:', rf_adasyn_f1_score)
-print('Acc Matt_Corr:', rf_adasyn_matt_corr)
 print('Acc Precision:', rf_adasyn_precision)
 print('Acc Recall:', rf_adasyn_recall)
 
-#================================
-#train with Unbalanced data
-#================================
-
 #Neural Network Classifier
-# nn_classifier = MLPClassifier(alpha=1, max_iter=50)
-# nn_classifier.fit(x_train_encoded, y_train)
-
-# # make predictions
-# y_unblncd_predict = nn_classifier.predict(x_test_encoded)
-
-# # training set performance
-# nn_unblncd_f1_score = f1_score(y_test, y_unblncd_predict)
-# nn_unblncd_matt_corr = matthews_corrcoef(y_test, y_unblncd_predict)
-# nn_unblncd_precision = precision_score(y_test, y_unblncd_predict)
-# nn_unblncd_recall = recall_score(y_test, y_unblncd_predict)
-
-# print('Unbalanced Performance Result')
-# print('Acc F1:', nn_unblncd_f1_score)
-# print('Acc Matt_Corr:', nn_unblncd_matt_corr)
-# print('Acc Precision:', nn_unblncd_precision)
-# print('Acc Recall:', nn_unblncd_recall)
 
 #==============================================
 #train with SMOTE
 #==============================================
 
-nn_smote_classifier = MLPClassifier(alpha=1, max_iter=150)
+nn_smote_classifier = MLPClassifier(alpha=1, max_iter=50)
 nn_smote_classifier.fit(X_train_smote, y_train_smote)
 
 # make predictions
@@ -215,14 +166,12 @@ y_smote_predict = nn_smote_classifier.predict(x_test_encoded)
 
 # training set performance
 nn_smote_f1_score = f1_score(y_test, y_smote_predict, average='weighted')
-nn_smote_matt_corr = matthews_corrcoef(y_test, y_smote_predict)
 nn_smote_precision = precision_score(y_test, y_smote_predict, average='weighted', zero_division=1)
 nn_smote_recall = recall_score(y_test, y_smote_predict, average='weighted', zero_division=1)
 
 print('===================================')
 print('SMOTE Performance Result')
 print('Acc F1:', nn_smote_f1_score)
-print('Acc Matt_Corr:', nn_smote_matt_corr)
 print('Acc Precision:', nn_smote_precision)
 print('Acc Recall:', nn_smote_recall)
 
@@ -230,7 +179,7 @@ print('Acc Recall:', nn_smote_recall)
 #train with ADASYN
 #==============================================
 
-nn_adasyn_classifier = MLPClassifier(alpha=1, max_iter=150)
+nn_adasyn_classifier = MLPClassifier(alpha=1, max_iter=50)
 nn_adasyn_classifier.fit(X_train_adasyn, y_train_adasyn)
 
 # make predictions
@@ -238,55 +187,19 @@ y_adasyn_predict = nn_adasyn_classifier.predict(x_test_encoded)
 
 # training set performance
 nn_adasyn_f1_score = f1_score(y_test, y_adasyn_predict, average='weighted')
-nn_adasyn_matt_corr = matthews_corrcoef(y_test, y_adasyn_predict)
 nn_adasyn_precision = precision_score(y_test, y_adasyn_predict, average='weighted' , zero_division=1)
 nn_adasyn_recall = recall_score(y_test, y_adasyn_predict, average='weighted', zero_division=1)
 
 print('===================================')
 print('ADASYN Performance Result')
 print('Acc F1:', nn_adasyn_f1_score)
-print('Acc Matt_Corr:', nn_adasyn_matt_corr)
 print('Acc Precision:', nn_adasyn_precision)
 print('Acc Recall:', nn_adasyn_recall)
 
 #Decision Tree Classifier
 
-#==============================================
-#train with Unbalanced data
-#==============================================
-
 # Finding the optimal max_depth using cross-validation on the training data
 depths = range(1, 10)
-# cv_scores_unblncd = [cross_val_score(DecisionTreeClassifier(max_depth=d), x_train_encoded, y_train, cv=5, scoring='f1_weighted').mean() for d in depths]
-# optimal_depth = depths[np.argmax(cv_scores_unblncd)]
-
-# print(f"Optimal max_depth: {optimal_depth}")
-
-# # Train the decision tree classifier with the optimal max_depth
-# dt_classifier = DecisionTreeClassifier(max_depth=optimal_depth)
-# dt_classifier.fit(x_train_encoded, y_train)
-
-
-# # dt_classifier = DecisionTreeClassifier(max_depth=10)
-# # dt_classifier.fit(x_train_encoded, y_train)
-
-# # make predictions
-# y_unblncd_predict = dt_classifier.predict(x_test_encoded)
-
-# # training set performance
-# dt_unblncd_f1_score = f1_score(y_test, y_unblncd_predict, average='weighted')
-# dt_unblncd_matt_corr = matthews_corrcoef(y_test, y_unblncd_predict)
-# dt_unblncd_precision = precision_score(y_test, y_unblncd_predict)
-# dt_unblncd_recall = recall_score(y_test, y_unblncd_predict)
-
-# #rf_score = nn_classifier(y_test_encoded, y_test)
-
-# # result
-# print('Unbalanced Performance Result')
-# print('Acc F1:', dt_unblncd_f1_score)
-# print('Acc Matt_Corr:', dt_unblncd_matt_corr)
-# print('Acc Precision:', dt_unblncd_precision)
-# print('Acc Recall:', dt_unblncd_recall)
 
 #==============================================
 #train with SMOTE
@@ -304,7 +217,6 @@ y_smote_predict = dt_smote_classifier.predict(x_test_encoded)
 
 # testing set performance
 dt_smote_f1_score = f1_score(y_test, y_smote_predict, average='weighted')
-dt_smote_matt_corr = matthews_corrcoef(y_test, y_smote_predict)
 dt_smote_precision = precision_score(y_test, y_smote_predict)
 dt_smote_recall = recall_score(y_test, y_smote_predict)
 
@@ -312,7 +224,6 @@ print('===================================')
 # result
 print('SMOTE Performance Result')
 print('Acc F1:', dt_smote_f1_score)
-print('Acc Matt_Corr:', dt_smote_matt_corr)
 print('Acc Precision:', dt_smote_precision)
 print('Acc Recall:', dt_smote_recall)
 
@@ -332,7 +243,6 @@ y_adasyn_predict = dt_adasyn_classifier.predict(x_test_encoded)
 
 # testing set performance
 dt_adasyn_f1_score = f1_score(y_test, y_adasyn_predict, average='weighted')
-dt_adasyn_matt_corr = matthews_corrcoef(y_test, y_adasyn_predict)
 dt_adasyn_precision = precision_score(y_test, y_adasyn_predict)
 dt_adasyn_recall = recall_score(y_test, y_adasyn_predict)
 
@@ -341,34 +251,10 @@ print('================================')
 # result
 print('ADASYN Performance Result')
 print('Acc F1:', dt_adasyn_f1_score)
-print('Acc Matt_Corr:', dt_adasyn_matt_corr)
 print('Acc Precision:', dt_adasyn_precision)
 print('Acc Recall:', dt_adasyn_recall)
 
 #LightGBM Classifier
-
-# Define the parameter grid
-
-#==============================================
-#train with Unbalanced data
-#==============================================
-# lgb_classifier = lgb.LGBMClassifier()
-# lgb_classifier.fit(x_train_encoded, y_train)
-
-# # make predictions
-# y_unblncd_predict = lgb_classifier.predict(x_test_encoded)
-
-# # training set performance
-# lgb_unblncd_f1_score = f1_score(y_test, y_unblncd_predict, average='weighted')
-# lgb_unblncd_matt_corr = matthews_corrcoef(y_test, y_unblncd_predict)
-# lgb_unblncd_precision = precision_score(y_test, y_unblncd_predict, average='weighted')
-# lgb_unblncd_recall = recall_score(y_test, y_unblncd_predict, average='weighted')
-
-# print('Unbalanced Performance Result')
-# print('Acc F1:', lgb_unblncd_f1_score)
-# print('Acc Matt_Corr:', lgb_unblncd_matt_corr)
-# print('Acc Precision:', lgb_unblncd_precision)
-# print('Acc Recall:', lgb_unblncd_recall)
 
 #==============================================
 # train with ADASYN
@@ -382,7 +268,6 @@ y_adasyn_predict = lgb_adasyn_classifier.predict(x_test_encoded)
 
 # testing set performance
 lgb_adasyn_f1_score = f1_score(y_test, y_adasyn_predict, average='weighted')
-lgb_adasyn_matt_corr = matthews_corrcoef(y_test, y_adasyn_predict)
 lgb_adasyn_precision = precision_score(y_test, y_adasyn_predict, average='weighted')
 lgb_adasyn_recall = recall_score(y_test, y_adasyn_predict, average='weighted')
 
@@ -392,7 +277,6 @@ print('===================================')
 # result
 print('ADASYN Performance Result')
 print('Acc F1:', lgb_adasyn_f1_score)
-print('Acc Matt_Corr:', lgb_adasyn_matt_corr)
 print('Acc Precision:', lgb_adasyn_precision)
 print('Acc Recall:', lgb_adasyn_recall)
 
@@ -408,40 +292,16 @@ lgb_classifier_smote.fit(X_train_smote, y_train_smote)
 y_smote_predict = lgb_classifier_smote.predict(x_test_encoded)
 
 lgb_smote_f1_score = f1_score(y_test, y_smote_predict, average='weighted')
-lgb_smote_matt_corr = matthews_corrcoef(y_test, y_smote_predict)
 lgb_smote_precision = precision_score(y_test, y_smote_predict, average='weighted')
 lgb_smote_recall = recall_score(y_test, y_smote_predict, average='weighted')
 
 print('===================================')
 print('SMOTE Performance Result')
 print('Acc F1:', lgb_smote_f1_score)
-print('Acc Matt_Corr:', lgb_smote_matt_corr)
 print('Acc Precision:', lgb_smote_precision)
 print('Acc Recall:', lgb_smote_recall)
 
-#==============================================
-#train with Unbalanced data
-#==============================================
-
 #XGBOOST Classifier
-# xgb_classifier = XGBClassifier()
-# xgb_classifier.fit(x_train_encoded, y_train)
-
-# # make predictions
-# y_unblncd_predict = xgb_classifier.predict(x_test_encoded)
-
-# # training set performance
-# xgb_unblncd_f1_score = f1_score(y_test, y_unblncd_predict, average='weighted')
-# xgb_unblncd_matt_corr = matthews_corrcoef(y_test, y_unblncd_predict)
-# xgb_unblncd_precision = precision_score(y_test, y_unblncd_predict, average='weighted')
-# xgb_unblncd_recall = recall_score(y_test, y_unblncd_predict, average='weighted')
-
-# # result
-# print('Unbalanced Performance Result')
-# print('Acc F1:', xgb_unblncd_f1_score)
-# print('Acc Matt_Corr:', xgb_unblncd_matt_corr)
-# print('Acc Precision:', xgb_unblncd_precision)
-# print('Acc Recall:', xgb_unblncd_recall)
 
 #==============================================
 # train with SMOTE
@@ -453,7 +313,6 @@ y_smote_predict = xgb_classifier_smote.predict(x_test_encoded)
 
 # training set performance
 xgb_smote_f1_score = f1_score(y_test, y_smote_predict, average='weighted')
-xgb_smote_matt_corr = matthews_corrcoef(y_test, y_smote_predict)
 xgb_smote_precision = precision_score(y_test, y_smote_predict, average='weighted')
 xgb_smote_recall = recall_score(y_test, y_smote_predict, average='weighted')
 
@@ -462,7 +321,6 @@ print('===================================')
 # result
 print('SMOTE Performance Result')
 print('Acc F1:', xgb_smote_f1_score)
-print('Acc Matt_Corr:', xgb_smote_matt_corr)
 print('Acc Precision:', xgb_smote_precision)
 print('Acc Recall:', xgb_smote_recall)
 #==============================================
@@ -477,7 +335,6 @@ y_adasyn_predict = xgb_adasyn_classifier.predict(x_test_encoded)
 
 # testing set performance
 xgb_adasyn_f1_score = f1_score(y_test, y_adasyn_predict, average='weighted')
-xgb_adasyn_matt_corr = matthews_corrcoef(y_test, y_adasyn_predict)
 xgb_adasyn_precision = precision_score(y_test, y_adasyn_predict, average='weighted')
 xgb_adasyn_recall = recall_score(y_test, y_adasyn_predict, average='weighted')
 
@@ -485,7 +342,6 @@ xgb_adasyn_recall = recall_score(y_test, y_adasyn_predict, average='weighted')
 print('===================================')
 print('ADASYN Performance Result')
 print('Acc F1:', xgb_adasyn_f1_score)
-print('Acc Matt_Corr:', xgb_adasyn_matt_corr)
 print('Acc Precision:', xgb_adasyn_precision)
 print('Acc Recall:', xgb_adasyn_recall)
 
@@ -509,7 +365,6 @@ y_predict = stack.predict(x_test_encoded)
 
 # testing set performance
 stack_f1_score = f1_score(y_test, y_predict, average='weighted')
-stack_matt_corr = matthews_corrcoef(y_test, y_predict)
 stack_precision = precision_score(y_test, y_predict, average='weighted')
 stack_recall = recall_score(y_test, y_predict, average='weighted')
 
@@ -517,7 +372,6 @@ stack_recall = recall_score(y_test, y_predict, average='weighted')
 print('===================================')
 print('Testing Performance Result')
 print('Acc F1:', stack_f1_score)
-print('Acc Matt_Corr:', stack_matt_corr)
 print('Acc Precision:', stack_precision)
 print('Acc Recall:', stack_recall)
 
